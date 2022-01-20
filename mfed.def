@@ -1,0 +1,27 @@
+Bootstrap: docker
+From: ubuntu:20.04
+
+%labels
+AUTHOR Adam Reid
+
+%environment
+export TZ=Europe/London
+
+%post
+# This is to fix ubuntu install hanging on timezone input
+ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+apt-get update
+apt-get install -y r-base-core wget vim python
+apt-get clean
+
+R --slave -e 'if (!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocManager", repos="https://cloud.r-project.org/")'
+
+R --slave -e 'BiocManager::install("DiffBind")'
+
+# This bit needs testing!!!
+wget https://sourceforge.net/projects/subread/files/subread-2.0.3/subread-2.0.3-Linux-x86_64.tar.gz
+tar -xvf subread-2.0.3-Linux-x86_64.tar.gz
+cd subread-2.0.3/src
+make -f Makefile.Linux
+cp featureCounts /usr/bin/
