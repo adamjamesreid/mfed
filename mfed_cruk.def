@@ -1,0 +1,16 @@
+Bootstrap: docker
+From: crukcibioinformatics/quantitative_chip_workshop
+
+%labels
+AUTHOR Adam Reid
+
+%environment
+
+%post
+
+wget https://sourceforge.net/projects/subread/files/subread-2.0.3/subread-2.0.3-Linux-x86_64.tar.gz
+sudo tar -C /usr/local -xzvf subread-2.0.3-Linux-x86_64.tar.gz
+rm subread-2.0.3-Linux-x86_64.tar.gz
+echo 'export PATH=/usr/local/subread-2.0.3-Linux-x86_64/bin:${PATH}' >> $SINGULARITY_ENVIRONMENT
+
+
