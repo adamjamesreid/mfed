@@ -8,6 +8,8 @@ Pipeline for analysing DamID data
 `nextflow run ~/code_development/mfed/mfed.nf --ss suv39_samplesheet.csv --treatment Suv39 --control DAM --frags ~/code_development/mfed/gatc_frags.gtf --outdir outdir`
 
 ## Singularity image
-*mfed.def* is in development as a Singularity definition file capturing the dependencies for mfed.nf
+*mfed_cruk.def* is in development as a Singularity definition file capturing the dependencies for mfed.nf
 
-Build like this: `sudo singularity build mfed.sif mfed.def`
+It makes use of the DiffBind install in the CRUK DiffBind workshop Singularity image described [here](https://www.cruk.cam.ac.uk/core-facilities/bioinformatics-core/software/diffbind-tool-for-chip-seq-and-atac-seq-analysis)
+
+Build like this: `sudo singularity build mfed_cruk.sif mfed_cru.def`
