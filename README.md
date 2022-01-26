@@ -21,5 +21,7 @@ e.g. `nextflow run ~/code_development/mfed/mfed.nf --ss suv39_samplesheet.csv --
 
 ##To Do
 Genome fragmentation script current outputs BED, when it shoud do GTF
-I have run this to convert bed to GTF
+
+I have run this to convert bed to GTF:
+
 `cat gatc_frags.bed | perl -ne 'chomp;@a=split/\t/;print "$a[0]\tGATC_frag\tregion\t$a[1]\t$a[2]\t.\t.\t.\tfrag_id=\"$a[0]\:$a[1]\_$a[2]\"\n"' > gatc_frags.gtf`
