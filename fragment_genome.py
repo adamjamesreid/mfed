@@ -11,7 +11,7 @@ def get_dpnI_fragments(pattern, file_path):
     for record in SeqIO.parse(open(file_path, "r"), "fasta"):
         chrom = record.id
         previous = 0
-        for match in re.finditer(pattern, str(record.seq)):
+        for match in re.finditer(pattern, str(record.seq).upper()):
             mid_pos = match.start() + 2 # +1 for the right start position, +2 for cut in middle of GATC
 
             if previous > 0:
