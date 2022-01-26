@@ -5,7 +5,6 @@ params.ss = 'samplesheet.csv'
 params.frags = 'gatc_frags.gtf'
 params.min_reads = 10
 params.min_length = 300
-params.Rscript = '/mnt/beegfs/home1/reid/ajr236/code_development/mfed/mfed_diffbind.R'
 params.control = 'DAM'
 params.treatment = ''
 params.fc_cut = 2
@@ -20,7 +19,6 @@ log.info """\
         GATC fragment GTF:	${params.frags}
         Minimum frag length:	${params.min_length}
         Minimum reads (in biggest samples):	${params.min_reads}
-        Rscript location:	${params.Rscript}
         Control:		${params.control}
         Treatment:		${params.treatment}
         Fold change cutoff:	${params.fc_cut}
@@ -83,7 +81,7 @@ process filter_frags {
 
     script:
     """
-    filter_fragments.py -i $fc_result -r ${params.min_reads} -m ${params.min_length} > filtered_fragments.bed
+    ${baseDir}/bin/filter_fragments.py -i $fc_result -r ${params.min_reads} -m ${params.min_length} > filtered_fragments.bed
     """
 }
 
@@ -105,6 +103,6 @@ process diffbind {
 
     script:
     """
-    R CMD BATCH --no-save --no-restore \"--args ${ss} ${params.control} ${params.treatment} ${params.fc_cut} ${params.fdr_cut}\" ${params.Rscript} .mfed_diffbind.Rout
+    R CMD BATCH --no-save --no-restore \"--args ${ss} ${params.control} ${params.treatment} ${params.fc_cut} ${params.fdr_cut}\" ${baseDir}/bin/mfed_diffbind.R .mfed_diffbind.Rout
     """
 }
