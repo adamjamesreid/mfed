@@ -7,6 +7,7 @@ library(parallel)
 # 3. Treatment condition (as defined in the samplesheet)
 # 4. Fold change cutoff
 # 5. FDR cutoff
+# 6. GTF file
 
 args <- commandArgs(TRUE)
 
@@ -15,6 +16,28 @@ control <- args[2]
 treatment <- args[3]
 fc_cut <- args[4]
 fdr_cut <- args[5]
+gtf_file <- args[6]
+annotation_level <- args[7]
+genomicAnnotationPriority <- args[8]
+
+#genomicAnnotationPriority = c("Exon", "Intron", "5UTR", "3UTR", "Promoter",  
+#                              "Downstream", "Intergenic")
+#annotation_level = "gene" # "gene" or "transcript"
+
+#########
+# Testing
+#########
+ss = "suv39_samplesheet.csv"
+control = "DAM"
+treatment = "Suv39"
+fc_cut = 2
+fdr_cut = 1e-5
+genomicAnnotationPriority = c("Exon", "Intron", "5UTR", "3UTR", "Promoter",  
+                              "Downstream", "Intergenic")
+annotation_level = "gene" # "gene" or "transcript"
+gtf_file = "../dm6.ensGene.gtf"
+setwd('/mnt/beegfs/home1/reid/ajr236/projects/brand/GBP0003/mfed')
+########
 
 db <- dba(sampleSheet=ss)
 
@@ -43,7 +66,7 @@ normlibs
 db <- dba.contrast(db, contrast=c("Treatment", treatment, control))
 db
 
-db <- dba.analyze(db)
+db <- dba.analyze(db, bBlacklist=FALSE, bGreylist=FALSE)
 dba.show(db, bContrasts=TRUE)
 
 #dev.off()
@@ -58,7 +81,7 @@ hist(db.DB$Fold, breaks=50)
 
 # Filter for significance (fold change and FDR)
 db.DB.conf <- subset(db.DB, ((db.DB$Fold >= fc_cut | db.DB$Fold <= fc_cut) & db.DB$FDR <= fdr_cut))
-write.table(db.DB.conf, file="results.txt")
+write.table(db.DB.conf, file="results.txt", sep="\t", quote=FALSE, row.names=FALSE)
 
 # Write out significant peaks 
 db.DB.conf.df <- as.data.frame(db.DB.conf)  
@@ -68,4 +91,31 @@ write.table(out_table, sep='\t', quote=FALSE, row.names=FALSE, col.names=FALSE, 
 # Write out consensus peak set
 dba.peakset(db, peak.format="bed", bRetrieve=TRUE, writeFile="filtered_fragments_diffbind.bed")
 
+# Testing to add gene annotation for fragments
+#library(TxDb.Dmelanogaster.UCSC.dm6.ensGene) # Which mitochondrial sequence does this annotation use?
+library(ChIPseeker)
 
+# N.b. some fragments do not get annotated, but in the case of the test data these were
+# all on non-primary sequence e.g.unplaced contigs, which presumably have little or no
+# annotation
+
+# Thinking that controling the reference going in and making custom annotations is the way to go
+#peakAnno.edb <- annotatePeak(db.DB.conf, tssRegion=c(-100, 100),
+#                             TxDb=TxDb.Dmelanogaster.UCSC.dm6.ensGene, #,annoDb="org.Hs.eg.db",
+#                  genomicAnnotationPriority = c("Exon", "Intron", "5UTR", "3UTR", "Promoter",  
+#                              "Downstream", "Intergenic"),
+#                  level="gene")
+
+#peakAnno.df <- as.data.frame(peakAnno.edb)
+#write.table(peakAnno.edb, file="results_annotated.tsv", sep="\t", quote=FALSE, row.names=FALSE)
+
+# Try making a custom TxDB object
+library(GenomicFeatures)
+Dm_custom_TXDb <- makeTxDbFromGFF(gtf_file, format="gtf")
+peakAnno.custom.edb <- annotatePeak(db.DB.conf, tssRegion=c(-100, 100),
+                             TxDb=Dm_custom_TXDb, #,annoDb="org.Hs.eg.db",
+                             genomicAnnotationPriority = genomicAnnotationPriority,
+                             level=annotation_level)
+
+peakAnno.custom.df <- as.data.frame(peakAnno.edb)
+write.table(peakAnno.custom.edb, file="results_annotated.tsv", sep="\t", quote=FALSE, row.names=FALSE)
