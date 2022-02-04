@@ -15,4 +15,7 @@ sudo tar -C /usr/local -xzvf subread-1.6.0-Linux-x86_64.tar.gz
 rm subread-1.6.0-Linux-x86_64.tar.gz
 echo 'export PATH=/usr/local/subread-1.6.0-Linux-x86_64/bin:${PATH}' >> $SINGULARITY_ENVIRONMENT
 
+# Install required R packages
+R --slave -e 'if (!require("BiocManager", quietly = TRUE)) install.packages("BiocManager")'
 
+R --slave -e 'BiocManager::install("ChIPseeker")'

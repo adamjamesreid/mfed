@@ -10,12 +10,18 @@ params.treatment = ''
 params.fc_cut = 2
 params.fdr_cut = 0.01
 params.outdir = "$baseDir/outdir"
+params.anngtf = ""
+params.annlevel = 'gene' // gene or transcript
+params.annpriority = ''// File of element priority for fragment annotation
 
 log.info """\
         METHYLATION FRAGMENT ENRICHMENT FOR DAMID (mfed)
         ==================================================
    
         Samplesheet: 		${params.ss}
+        Genome annotations GTF: ${params.anngtf}
+        Annotation level:	${params.annlevel}
+        Annotation priority file:	${params.annpriority}
         GATC fragment GTF:	${params.frags}
         Minimum frag length:	${params.min_length}
         Minimum reads (in biggest samples):	${params.min_reads}
@@ -27,18 +33,41 @@ log.info """\
         """
         .stripIndent()
 
+////
 // Set up input channels
-Channel
-    .fromPath(params.frags)
+
+// File of GATC fragments which will be the things we are looking for enrichment of
+if (params.frags) { 
+  Channel
+    .fromPath(params.frags, checkIfExists: true)
     .first() // Converts to a value channel to avoid consuming the reference
     .set{frag_ch}
+} else { exit 1, 'GATC fragments GTF file not specified!' }
+
+// Set up Annotation GTF channel (used by ChIPseeker in the mfed_diffbind.R script)
+if (params.anngtf) { 
+  Channel
+    .fromPath(params.anngtf, checkIfExists: true)
+    .first() // Converts to a value channel to avoid consuming the reference
+    .set{anngtf_ch}
+} else { exit 1, 'Genome annotation GTF file not specified!' }
+
+// set up optional annotation priority file channel (used by ChIPseeker in the mfed_diffbind.R script)
+if (params.annpriority) {
+  Channel
+    .fromPath(params.annpriority, checkIfExists: false)
+    .first() // Converts to a value channel to avoid consuming the reference
+    .set{annpriority_ch}
+}
 
 // Read in samplesheet and get bams (twice! Not sure how to duplicate channel in this syntax)
-Channel
+if (params.ss) {
+  Channel
     .fromPath(params.ss, checkIfExists: true)
     .splitCsv(header:true)
     .map{row -> file(row.bamReads)}
     .set{ bams_ch1 }
+} else { exit 1, 'Samplesheet file not specified!' }
 
 Channel
     .fromPath(params.ss, checkIfExists: true)
@@ -92,6 +121,8 @@ process diffbind {
     input:
     path ss from ss_ch
     path bams from bams_ch2.collect()
+    path anngtf from anngtf_ch
+    path annpriority from annpriority_ch
     path "filtered_fragments.bed" from filt_frag_ch
 
     output:
@@ -100,9 +131,10 @@ process diffbind {
     path "significant_fragments.bed" into results_ch2
     path "filtered_fragments_diffbind.bed" into results_ch3
     path "results.txt" into results_ch4
+    path "results_annotated.tsv" into results_ch5
 
     script:
     """
-    R CMD BATCH --no-save --no-restore \"--args ${ss} ${params.control} ${params.treatment} ${params.fc_cut} ${params.fdr_cut}\" ${baseDir}/bin/mfed_diffbind.R .mfed_diffbind.Rout
+    R CMD BATCH --no-save --no-restore \"--args ${ss} ${params.control} ${params.treatment} ${params.fc_cut} ${params.fdr_cut} ${anngtf} ${params.annlevel} ${annpriority}\" ${baseDir}/bin/mfed_diffbind.R .mfed_diffbind.Rout
     """
 }

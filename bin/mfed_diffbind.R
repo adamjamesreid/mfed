@@ -18,26 +18,12 @@ fc_cut <- args[4]
 fdr_cut <- args[5]
 gtf_file <- args[6]
 annotation_level <- args[7]
-genomicAnnotationPriority <- args[8]
 
-#genomicAnnotationPriority = c("Exon", "Intron", "5UTR", "3UTR", "Promoter",  
-#                              "Downstream", "Intergenic")
-#annotation_level = "gene" # "gene" or "transcript"
+# Comma-separated file listing priority of annotations, default used if not supplied
+#e.g. "Exon,Intron,5UTR,3UTR,Promoter,Downstream,Intergenic" 
+genomicAnnotationPriorityfile <- args[8] # Comma-separated file listing priority of annotations, default used if not supplied
 
-#########
-# Testing
-#########
-ss = "suv39_samplesheet.csv"
-control = "DAM"
-treatment = "Suv39"
-fc_cut = 2
-fdr_cut = 1e-5
-genomicAnnotationPriority = c("Exon", "Intron", "5UTR", "3UTR", "Promoter",  
-                              "Downstream", "Intergenic")
-annotation_level = "gene" # "gene" or "transcript"
-gtf_file = "../dm6.ensGene.gtf"
-setwd('/mnt/beegfs/home1/reid/ajr236/projects/brand/GBP0003/mfed')
-########
+tssRegion = c(-100, 100)
 
 db <- dba(sampleSheet=ss)
 
@@ -112,10 +98,28 @@ library(ChIPseeker)
 # Try making a custom TxDB object
 library(GenomicFeatures)
 Dm_custom_TXDb <- makeTxDbFromGFF(gtf_file, format="gtf")
-peakAnno.custom.edb <- annotatePeak(db.DB.conf, tssRegion=c(-100, 100),
-                             TxDb=Dm_custom_TXDb, #,annoDb="org.Hs.eg.db",
-                             genomicAnnotationPriority = genomicAnnotationPriority,
-                             level=annotation_level)
 
-peakAnno.custom.df <- as.data.frame(peakAnno.edb)
+#Read in annotation priorities
+if(file.exists(genomicAnnotationPriorityfile)) {
+  apf_df = read.csv(genomicAnnotationPriorityfile, header=FALSE)
+
+  # Annotate fragments
+  peakAnno.custom.edb <- annotatePeak(db.DB.conf, tssRegion=tssRegion,
+                                      TxDb=Dm_custom_TXDb, #,annoDb="org.Hs.eg.db",
+                                      genomicAnnotationPriority = as.character(apf_df[1,]),
+                                      level=annotation_level)
+} else {
+  # Annotate fragments
+  peakAnno.custom.edb <- annotatePeak(db.DB.conf, tssRegion=tssRegion,
+                                      TxDb=Dm_custom_TXDb, #,annoDb="org.Hs.eg.db",
+                                      level=annotation_level)
+
+}
+
+# Outputs summary of annotation
+peakAnno.custom.edb
+
+peakAnno.custom.df <- as.data.frame(peakAnno.custom.edb)
 write.table(peakAnno.custom.edb, file="results_annotated.tsv", sep="\t", quote=FALSE, row.names=FALSE)
+
+
