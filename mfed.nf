@@ -131,10 +131,26 @@ process diffbind {
     path "significant_fragments.bed" into results_ch2
     path "filtered_fragments_diffbind.bed" into results_ch3
     path "results.txt" into results_ch4
-    path "results_annotated.tsv" into results_ch5
+    path "results_annotated.tsv" into results_ch6
 
     script:
     """
     R CMD BATCH --no-save --no-restore \"--args ${ss} ${params.control} ${params.treatment} ${params.fc_cut} ${params.fdr_cut} ${anngtf} ${params.annlevel} ${annpriority}\" ${baseDir}/bin/mfed_diffbind.R .mfed_diffbind.Rout
+    """
+}
+
+// Make a bedGraph file of log fold changes
+process fc_bedgraph
+{
+    publishDir params.outdir, mode:'copy'
+
+    input:
+    path res from results_ch6
+
+    output:
+    path "foldchange.bedgraph" into bedgraph_ch
+
+    """
+    ${baseDir}/bin/results2bedgraph.py ${res} > foldchange.bedgraph 
     """
 }

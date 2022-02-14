@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # Take results from the mfed pipeline and make a bedgraph file of log fold changes
 
 import sys
