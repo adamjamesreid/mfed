@@ -17,4 +17,4 @@ with open(rf, 'r') as r:
         if v[0] == 'seqnames':
             continue
         # Print out seqname, start, end, Fold change
-        print(" ".join([v[0], v[1], v[2], v[7]]))
+        print(" ".join([v[0], v[1], v[2], v[8]]))
