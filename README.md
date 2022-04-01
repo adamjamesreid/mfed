@@ -4,9 +4,9 @@ Pipeline for analysing DamID data
 ## Setup
 Install Miniconda (for installing various packages)
 
-`wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+`wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh`
 
-bash Miniconda3-latest-Linux-x86_64.sh`
+`bash Miniconda3-latest-Linux-x86_64.sh`
 
 Install Nextflow if you do not have it already (for running pipelines)
 
@@ -20,13 +20,17 @@ Pull the mfed git repository
 
 `git clone https://github.com/adamjamesreid/mfed.git`
 
-## Run the pipeline 
+## Run the pipeline with test data
 ### Map the reads with nf-core/chipseq 
-1. Set up a design file describing the data as described [here](https://nf-co.re/chipseq/1.2.2/usage), also see the example 'design.csv' in this repository
+1. Set up a design file describing the data as described [here](https://nf-co.re/chipseq/1.2.2/usage), for testing use 'mapping_design_test.csv' from this repository
+
+2. Copy fastq files locally
+
+`cp /mnt/bioinfo_sharing/sharing/brand/mfed/*gz .`
 
 2. Run nf-core/chipseq (--macs_gsize is set to 0 so that it doesn't run MACS2 and fall over because it can't calculate t for single-end damid reads)
 
-`nextflow run nf-core/chipseq -profile singularity -c /mnt/home3/nextflow/gurdon.config --single_end --genome BDGP6 --input design.csv --macs_gsize 0`
+`nextflow run nf-core/chipseq -r 1.2.2 -profile singularity -c /mnt/home3/nextflow/gurdon.config --single_end --genome BDGP6 --input mfed/mapping_design_test.csv --macs_gsize 0`
 
 ### Run mfed nextflow script 
 
@@ -36,15 +40,22 @@ n.b. here i use the UCSC version of the ensembl gene set - which has 'chr' prepe
 
 ## Input files
 annotation_priority.csv - example file with priority list for fragment annotations using ChIPseeker
+
 dm6.ensGene.gtf - GFT file of genome annotation which works nicely with the BDGP6 reference
-mapping_design_test.csv - example input file for nf-core/chipseq describing the experiment
+
 gatc_frags.gtf - GATC fragments file for fly genome
+
+mapping_design_test.csv - example input file for nf-core/chipseq describing the experiment
+
 mfed_cruk.sif - Singularity image required for mfed.nf (this is currently available here /mnt/home3/nextflow/mfed/mfed_cruk.sif)
+
 mfed_samplesheet_test.csv - Example mfed samplesheet for running mfed.nf
 
 Test fastq files are currently located on the Gurdon cluster here: /mnt/bioinfo_sharing/sharing/brand/mfed/
 
 ## Output files
+
+MultiQC results - copy to local machine and view in a web browser
 
 ## Singularity image
 *mfed_cruk.def* is in development as a Singularity definition file capturing the dependencies for mfed.nf
