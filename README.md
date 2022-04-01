@@ -34,7 +34,13 @@ Pull the mfed git repository
 
 ### Run mfed nextflow script 
 
-`nextflow run ~/code_development/mfed/mfed.nf --ss mfed_samplesheet_test.csv --treatment hp1fusion --control damonly --frags gatc_frags.gtf --outdir outdir --anngtf dm6.ensGene.gtf --annpriority annotation_priority.txt -c /mnt/home3/nextflow/gurdon.config -with-singularity /mnt/home3/nextflow/mfed/mfed_cruk.sif`
+1. Copy bam files to current directory
+
+`cp results/bwa/mergedLibrary/*bam .`
+
+2. Run mfed Nextflow pipeline
+
+`nextflow run mfed/mfed.nf --ss mfed/mfed_samplesheet_test.csv --treatment hp1fusion --control damonly --frags gatc_frags.gtf --outdir outdir --anngtf dm6.ensGene.gtf --annpriority annotation_priority.txt -c /mnt/home3/nextflow/gurdon.config -with-singularity /mnt/home3/nextflow/mfed/mfed_cruk.sif`
 
 n.b. here i use the UCSC version of the ensembl gene set - which has 'chr' prepended to the sequence names, consistent with the BDGP6 genome version used above for nf-core/chipseq - however I think they use different mitochondrial genomes and so the genome should be explicitly defined above for nf-core/chipseq
 
