@@ -19,6 +19,14 @@ fdr_cut <- args[5]
 gtf_file <- args[6]
 annotation_level <- args[7]
 
+ss
+control
+treatment
+fc_cut
+fdr_cut
+gtf_file
+annotation_level
+
 # Comma-separated file listing priority of annotations, default used if not supplied
 #e.g. "Exon,Intron,5UTR,3UTR,Promoter,Downstream,Intergenic" 
 genomicAnnotationPriorityfile <- args[8] # Comma-separated file listing priority of annotations, default used if not supplied
@@ -55,6 +63,16 @@ db
 db <- dba.analyze(db, bBlacklist=FALSE, bGreylist=FALSE)
 dba.show(db, bContrasts=TRUE)
 
+# Output an MA plot
+pdf("MA_plot.pdf")
+dba.plotMA(db, th=as.double(fdr_cut))
+dev.off()
+
+#Output a volcano plot
+pdf("volcano_plot.pdf")
+dba.plotVolcano(db, th=as.double(fdr_cut))
+dev.off()
+
 #dev.off()
 pdf("sample_heatmap_post_contrast.pdf")
 plot(db, contrast=1)
@@ -65,8 +83,11 @@ db.DB
 
 hist(db.DB$Fold, breaks=50)
 
+# Write out all results
+write.table(db.DB, file="results_all.txt", sep="\t", quote=FALSE, row.names=FALSE)
+
 # Filter for significance (fold change and FDR)
-db.DB.conf <- subset(db.DB, ((db.DB$Fold >= fc_cut | db.DB$Fold <= fc_cut) & db.DB$FDR <= fdr_cut))
+db.DB.conf <- subset(db.DB, ((db.DB$Fold >= as.double(fc_cut) | db.DB$Fold <= as.double(fc_cut)) & db.DB$FDR <= as.double(fdr_cut)))
 write.table(db.DB.conf, file="results.txt", sep="\t", quote=FALSE, row.names=FALSE)
 
 # Write out significant peaks 

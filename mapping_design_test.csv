@@ -1,0 +1,5 @@
+group,replicate,fastq_1,fastq_2,antibody,control
+damonly,1,/mnt/bioinfo_sharing/sharing/brand/mfed/damonly_1.fastq.gz,,,
+damonly,2,/mnt/bioinfo_sharing/sharing/brand/mfed/damonly_2.fastq.gz,,,
+hp1fusion,1,/mnt/bioinfo_sharing/sharing/brand/mfed/hp1fusion_1.fastq.gz,,hp1,damonly
+hp1fusion,2,/mnt/bioinfo_sharing/sharing/brand/mfed/hp1fusion_2.fastq.gz,,hp1,damonly

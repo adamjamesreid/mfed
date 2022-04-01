@@ -128,6 +128,8 @@ process diffbind {
     output:
     path "plot.pdf" into results_ch1
     path "sample_heatmap_post_contrast.pdf" into results_ch5
+    path "volcano_plot.pdf" into results_ch7
+    path "MA_plot.pdf" into results_ch8
     path "significant_fragments.bed" into results_ch2
     path "filtered_fragments_diffbind.bed" into results_ch3
     path "results.txt" into results_ch4
