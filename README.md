@@ -20,13 +20,13 @@ Pull the mfed git repository
 
 `git clone https://github.com/adamjamesreid/mfed.git`
 
-## Run the pipeline 
+## Run the pipeline with test data
 ### Map the reads with nf-core/chipseq 
-1. Set up a design file describing the data as described [here](https://nf-co.re/chipseq/1.2.2/usage), also see the example 'design.csv' in this repository
+1. Set up a design file describing the data as described [here](https://nf-co.re/chipseq/1.2.2/usage), for testing use 'mapping_design_test.csv' from this repository
 
 2. Run nf-core/chipseq (--macs_gsize is set to 0 so that it doesn't run MACS2 and fall over because it can't calculate t for single-end damid reads)
 
-`nextflow run nf-core/chipseq -profile singularity -c /mnt/home3/nextflow/gurdon.config --single_end --genome BDGP6 --input design.csv --macs_gsize 0`
+`nextflow run nf-core/chipseq -profile singularity -c /mnt/home3/nextflow/gurdon.config --single_end --genome BDGP6 --input mfed/mapping_design_test.csv --macs_gsize 0`
 
 ### Run mfed nextflow script 
 
