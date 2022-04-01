@@ -1,7 +1,16 @@
 # mfed
 Pipeline for analysing DamID data
 
-## Begin by running nf-core/chipseq with --macs_gsize 0 so that it doesn't run MACS2 and fall over because it can't calculate t for damid data
+## Setup
+Install Nextflow if you do not have it already
+
+https://www.nextflow.io/docs/latest/getstarted.html
+
+## Map the read with nf-core/chipseq 
+1. Set up a design file describing the data as described [here] (https://nf-co.re/chipseq/1.2.2/usage), also see the example 'design.csv' in this repository
+
+2. Run nf-core/chipseq (--macs_gsize is set to 0 so that it doesn't run MACS2 and fall over because it can't calculate t for single-end damid reads)
+
 `nextflow run nf-core/chipseq -profile singularity -c /mnt/home3/nextflow/gurdon.config --single_end --genome BDGP6 --input design.csv --macs_gsize 0`
 
 ## Then run mfed nextflow script (here i use the UCSC version of the ensembl gene set - which has 'chr' prepended to the sequence names, consistent with the BDGP6 genome version used above for nf-core/chipseq - however I think they use different mitochondrial genomes and so the genome should be explicitly defined above for nf-core/chipseq)
