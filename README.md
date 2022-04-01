@@ -63,7 +63,22 @@ Test fastq files are currently located on the Gurdon cluster here: /mnt/bioinfo_
 
 ## Output files
 
-MultiQC results - copy to local machine and view in a web browser
+1. From nf-core/chipseq 
+* MultiQC results - copy to local machine and view in a web browser
+** results/multiqc/broadPeak/multiqc_report.html
+
+feature_counts.txt
+filtered_fragments.bed
+filtered_fragments_diffbind.bed
+foldchange.bedgraph
+MA_plot.pdf
+plot.pdf
+results_annotated.tsv
+results.txt
+sample_heatmap_post_contrast.pdf
+significant_fragments.bed
+volcano_plot.pdf
+
 
 ## Singularity image
 *mfed_cruk.def* is in development as a Singularity definition file capturing the dependencies for mfed.nf
