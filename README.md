@@ -2,21 +2,21 @@
 Pipeline for analysing DamID data
 
 ## Setup
-Install Miniconda (for installing various packages)
+1. Install Miniconda if you have not already (for installing various packages)
 
 `wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh`
 
 `bash Miniconda3-latest-Linux-x86_64.sh`
 
-Install Nextflow if you do not have it already (for running pipelines)
+2. Install Nextflow if you do not have it already (for running pipelines)
 
 `conda install -c bioconda nextflow`
 
-Install Git if you do not have it already (For downloading code repository)
+3. Install Git if you do not have it already (For downloading code repository)
 
 `conda install -c anaconda git`
 
-Pull the mfed git repository
+4. Pull the mfed git repository
 
 `git clone https://github.com/adamjamesreid/mfed.git`
 
@@ -28,7 +28,7 @@ Pull the mfed git repository
 
 `cp /mnt/bioinfo_sharing/sharing/brand/mfed/*gz .`
 
-2. Run nf-core/chipseq (--macs_gsize is set to 0 so that it doesn't run MACS2 and fall over because it can't calculate t for single-end damid reads)
+3. Run nf-core/chipseq (--macs_gsize is set to 0 so that it doesn't run MACS2 and fall over because it can't calculate t for single-end damid reads)
 
 `nextflow run nf-core/chipseq -r 1.2.2 -profile singularity -c /mnt/home3/nextflow/gurdon.config --single_end --genome BDGP6 --input mfed/mapping_design_test.csv --macs_gsize 0`
 
@@ -90,6 +90,22 @@ Test fastq files are currently located on the Gurdon cluster here: /mnt/bioinfo_
 * significant_fragments.bed - Fragments which pass the thresholds for significant enrichment
 
 * volcano_plot.pdf - volcano plot of fold changes against p values
+
+## More options
+
+You can make your own GATC fragment file using the script mfed/bin/fragment_genome.py
+
+When running mfed.nf:
+* *--min_reads* sets the minimum number of reads mapping to a fragment across all samples added together for it to pass the inital filtering (default = 10
+* *--min_length* sets the minimum length in of a fragment for it to pass initial filtering (default = 300)
+* *--control* is the name of the control condition as specified in the samplesheet e.g. damonly
+* *--treatment* is the name of the treatment/fusion condition specified in the samplesheet e.g. hp1fusion
+* *--fc_cut* is the fold change cutoff to consider a fragment as significant (default = 2)
+* *--fdr_cut* is the False Discovery Rate (FDR) cutoff to consider a fragment as significant (default = 0.01)
+* *--outdir* is the directory for the output files (default = outdir)
+* *--anngtf* is a GTF format file of genome annotation for determining the nearest gene
+* *--annlevel* used to determine whether to use gene or transcript features - can be 'gene' or 'transcript' (default = gene)
+* *--annpriority* file used to determine the order of priority of annotations e.g. are you most interested in Promoter or Exon features (default = use the file provided in the repository - annotation_priority.csv
 
 
 ## Singularity image
