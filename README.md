@@ -4,9 +4,9 @@ Pipeline for analysing DamID data
 ## Setup
 Install Miniconda (for installing various packages)
 
-`wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+`wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh`
 
-bash Miniconda3-latest-Linux-x86_64.sh`
+`bash Miniconda3-latest-Linux-x86_64.sh`
 
 Install Nextflow if you do not have it already (for running pipelines)
 
@@ -36,10 +36,15 @@ n.b. here i use the UCSC version of the ensembl gene set - which has 'chr' prepe
 
 ## Input files
 annotation_priority.csv - example file with priority list for fragment annotations using ChIPseeker
+
 dm6.ensGene.gtf - GFT file of genome annotation which works nicely with the BDGP6 reference
-mapping_design_test.csv - example input file for nf-core/chipseq describing the experiment
+
 gatc_frags.gtf - GATC fragments file for fly genome
+
+mapping_design_test.csv - example input file for nf-core/chipseq describing the experiment
+
 mfed_cruk.sif - Singularity image required for mfed.nf (this is currently available here /mnt/home3/nextflow/mfed/mfed_cruk.sif)
+
 mfed_samplesheet_test.csv - Example mfed samplesheet for running mfed.nf
 
 Test fastq files are currently located on the Gurdon cluster here: /mnt/bioinfo_sharing/sharing/brand/mfed/
