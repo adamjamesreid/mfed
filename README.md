@@ -38,7 +38,7 @@ Pipeline for analysing DamID data
 
 `cp results/bwa/mergedLibrary/*bam .`
 
-2. Set up a samplesheet for mfed describing the data (this is formatted a bit differently to the one for nf-core/chipseq and conforms to the format of DiffBind samplesheets described in the "Reading in the peakset" section [here](https://bioconductor.org/packages/devel/bioc/vignettes/DiffBind/inst/doc/DiffBind.pdf). The test example file is called mfed_samplesheet_test.csv in this repository.
+2. Set up a samplesheet for mfed describing the data (this is formatted a bit differently to the one for nf-core/chipseq and conforms to the format of DiffBind samplesheets described in the "Reading in the peakset" section [here](https://bioconductor.org/packages/devel/bioc/vignettes/DiffBind/inst/doc/DiffBind.pdf). The test example file is called mfed_samplesheet_test.csv in this repository.)
 
 3. Run mfed Nextflow pipeline
 
@@ -67,6 +67,10 @@ Test fastq files are currently located on the Gurdon cluster here: /mnt/bioinfo_
 * MultiQC results - copy to local machine and view in a web browser
 
 &nbsp&nbsp&nbsp&nbspresults/multiqc/broadPeak/multiqc_report.html
+
+* BAM files of mapped reads
+
+&nbsp&nbsp&nbsp&nbspresults/bwa/mergedLibrary/*bam
 
 2. From mfed pipeline (in outdir/ directory)
 * feature_counts.txt - lists every GATC fragment in the genome, describing the size and number of reads mapping to it in each sample
