@@ -2,9 +2,23 @@
 Pipeline for analysing DamID data
 
 ## Setup
-Install Nextflow if you do not have it already
+Install Miniconda (for installing various packages)
 
-https://www.nextflow.io/docs/latest/getstarted.html
+`wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+
+bash Miniconda3-latest-Linux-x86_64.sh`
+
+Install Nextflow if you do not have it already (for running pipelines)
+
+`conda install -c bioconda nextflow`
+
+Install Git if you do not have it already (For downloading code repository)
+
+`conda install -c anaconda git`
+
+Pull the mfed git repository
+
+git pull
 
 ## Map the read with nf-core/chipseq 
 1. Set up a design file describing the data as described [here](https://nf-co.re/chipseq/1.2.2/usage), also see the example 'design.csv' in this repository
