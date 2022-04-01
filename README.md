@@ -125,3 +125,8 @@ Genome fragmentation script current outputs BED, when it should do GTF
 I have run this to convert bed to GTF:
 
 `cat gatc_frags.bed | perl -ne 'chomp;@a=split/\t/;print "$a[0]\tGATC_frag\tregion\t$a[1]\t$a[2]\t.\t.\t.\tfrag_id=\"$a[0]\:$a[1]\_$a[2]\"\n"' > gatc_frags.gtf`
+
+Generate fragments on the fly in mfed.nf
+
+Try to make it a requirement for only one samplesheet
+
