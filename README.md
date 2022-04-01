@@ -38,9 +38,11 @@ Pull the mfed git repository
 
 `cp results/bwa/mergedLibrary/*bam .`
 
-2. Run mfed Nextflow pipeline
+2. Set up a samplesheet for mfed describing the data (this is formatted a bit differently to the one for nf-core/chipseq and conforms to the format of DiffBind samplesheets described in the "Reading in the peakset" section [here](https://bioconductor.org/packages/devel/bioc/vignettes/DiffBind/inst/doc/DiffBind.pdf). The test example file is called mfed_samplesheet_test.csv in this repository.
 
-`nextflow run mfed/mfed.nf --ss mfed/mfed_samplesheet_test.csv --treatment hp1fusion --control damonly --frags gatc_frags.gtf --outdir outdir --anngtf dm6.ensGene.gtf --annpriority annotation_priority.txt -c /mnt/home3/nextflow/gurdon.config -with-singularity /mnt/home3/nextflow/mfed/mfed_cruk.sif`
+3. Run mfed Nextflow pipeline
+
+`nextflow run mfed/mfed.nf -ss mfed/mfed_samplesheet_test.csv --treatment hp1fusion --control damonly --frags mfed/gatc_frags.gtf --outdir outdir --anngtf mfed/dm6.ensGene.gtf --annpriority mfed/annotation_priority.csv -c /mnt/home3/nextflow/gurdon.config -with-singularity /mnt/home3/nextflow/mfed/mfed_cruk.sif`
 
 n.b. here i use the UCSC version of the ensembl gene set - which has 'chr' prepended to the sequence names, consistent with the BDGP6 genome version used above for nf-core/chipseq - however I think they use different mitochondrial genomes and so the genome should be explicitly defined above for nf-core/chipseq
 
