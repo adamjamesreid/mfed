@@ -8,12 +8,11 @@ AUTHOR Adam Reid
 
 %post
 
-#wget https://sourceforge.net/projects/subread/files/subread-2.0.3/subread-2.0.3-Linux-x86_64.tar.gz
-wget https://sourceforge.net/projects/subread/files/subread-1.6.0/subread-1.6.0-Linux-x86_64.tar.gz
-#sudo tar -C /usr/local -xzvf subread-2.0.3-Linux-x86_64.tar.gz
-sudo tar -C /usr/local -xzvf subread-1.6.0-Linux-x86_64.tar.gz
-rm subread-1.6.0-Linux-x86_64.tar.gz
-echo 'export PATH=/usr/local/subread-1.6.0-Linux-x86_64/bin:${PATH}' >> $SINGULARITY_ENVIRONMENT
+# Subread v2.0.3 replaces v1.6.0 which had problems with some data
+# Originally I had reverted to v1.6.0 use to an error of some sort, but this no longer seems to be a problem
+wget https://sourceforge.net/projects/subread/files/subread-2.0.3/subread-2.0.3-Linux-x86_64.tar.gz
+sudo tar -C /usr/local -xzvf subread-2.0.3-Linux-x86_64.tar.gz
+echo 'export PATH=/usr/local/subread-2.0.3-Linux-x86_64/bin:${PATH}' >> $SINGULARITY_ENVIRONMENT
 
 # Install required R packages
 R --slave -e 'if (!require("BiocManager", quietly = TRUE)) install.packages("BiocManager")'
