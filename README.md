@@ -26,13 +26,9 @@ Add this line to your .bashrc file
 
 ## Run the pipeline with test data
 ### Map the reads with nf-core/chipseq 
-1. Set up a design file describing the data as described [here](https://nf-co.re/chipseq/1.2.2/usage), for testing use 'mapping_design_test.csv' from this repository
+1. Set up a design file describing the data as described [here](https://nf-co.re/chipseq/1.2.2/usage), for testing use 'mapping_design_test.csv' from this repository. Make sure you have the full paths to the fastq files
 
-2. Copy fastq files locally
-
-`cp /mnt/bioinfo_sharing/sharing/brand/mfed/*gz .`
-
-3. Run nf-core/chipseq (--macs_gsize is set to 0 so that it doesn't run MACS2 and fall over because it can't calculate t for single-end damid reads)
+2. Run nf-core/chipseq (--macs_gsize is set to 0 so that it doesn't run MACS2 and fall over because it can't calculate t for single-end damid reads)
 
 `nextflow run nf-core/chipseq -r 1.2.2 -profile singularity -c /mnt/home3/nextflow/gurdon.config --single_end --genome BDGP6 --input mfed/mapping_design_test.csv --macs_gsize 0`
 
