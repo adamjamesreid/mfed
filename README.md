@@ -49,7 +49,7 @@ n.b. here i use the UCSC version of the ensembl gene set - which has 'chr' prepe
 ## Input files
 annotation_priority.csv - example file with priority list for fragment annotations using ChIPseeker
 
-dm6.ensGene.gtf - GFT file of genome annotation which works nicely with the BDGP6 reference
+dm6.ensGene.gtf - GFT file of genome annotation which works nicely with the dm6 reference
 
 gatc_frags.gtf - GATC fragments file for fly genome
 
