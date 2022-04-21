@@ -30,7 +30,7 @@ Add this line to your .bashrc file
 
 2. Run nf-core/chipseq (--macs_gsize is set to 0 so that it doesn't run MACS2 and fall over because it can't calculate t for single-end damid reads)
 
-`nextflow run nf-core/chipseq -r 1.2.2 -profile singularity -c /mnt/home3/nextflow/gurdon.config --single_end --genome BDGP6 --input mfed/mapping_design_test.csv --macs_gsize 0`
+`nextflow run nf-core/chipseq -r 1.2.2 -profile singularity -c /mnt/home3/nextflow/gurdon.config --single_end --genome dm6 --input mfed/mapping_design_test.csv --macs_gsize 0`
 
 ### Run mfed nextflow script 
 
