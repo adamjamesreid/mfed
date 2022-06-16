@@ -32,6 +32,8 @@ Add this line to your .bashrc file
 
 `nextflow run nf-core/chipseq -r 1.2.2 -profile singularity -c /mnt/home3/nextflow/gurdon.config --single_end --genome dm6 --input mfed/mapping_design_test.csv --macs_gsize 0`
 
+n.b. this step helpfully removes duplicates and multimapping reads
+
 ### Run mfed nextflow script 
 
 1. Copy bam files to current directory
