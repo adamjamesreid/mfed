@@ -117,6 +117,7 @@ process filter_frags {
 // Run DiffBind R script to get enriched fragments - report BED file of all peaks, BED file of significant peaks and Excel file of fold change/FDRs
 process diffbind {
     publishDir params.outdir, mode:'copy'
+    
 
     input:
     path ss from ss_ch
@@ -137,6 +138,9 @@ process diffbind {
 
     script:
     """
+    # Set environment variables to avoid using local R (or python) libraries
+    export R_LIBS_USER=""
+    
     R CMD BATCH --no-save --no-restore \"--args ${ss} ${params.control} ${params.treatment} ${params.fc_cut} ${params.fdr_cut} ${anngtf} ${params.annlevel} ${annpriority}\" ${baseDir}/bin/mfed_diffbind.R .mfed_diffbind.Rout
     """
 }

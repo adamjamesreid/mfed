@@ -1,3 +1,6 @@
+# Check where we are loading libraries from
+.libPaths()
+
 library(DiffBind)
 library(parallel)
 
