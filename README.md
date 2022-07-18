@@ -78,20 +78,18 @@ results/bwa/mergedLibrary/*bam
 * feature_counts.txt - lists every GATC fragment in the genome, describing the size and number of reads mapping to it in each sample
 
 * filtered_fragments.bed - All the fragments which have passed initial filtering and will go into the DiffBind analysis
-
-* filtered_fragments_diffbind.bed - Concensus fragment set from DiffBind
  
 * foldchange.bedgraph - fold changes for significant fragments across the genome (view in IGV)
 
 * MA_plot.pdf - plot of average abundance versus fold change for each fragment
 
-* plot.pdf - heatmap comparing samples, before normalisation
-
 * results_annotated.tsv - Details of significant fragments, with fold changes and FDRs, with nearest gene features
 
 * results.txt - Details of significant fragments, with fold changes and FDRs
 
-* sample_heatmap_post_contrast.pdf - heatmap comparing samples, after normalisation
+* sample_heatmap_plot.pdf - heatmap comparing samples
+
+* sample_pca_plot.pdf - PCA plot comparing samples
 
 * significant_fragments.bed - Fragments which pass the thresholds for significant enrichment
 
