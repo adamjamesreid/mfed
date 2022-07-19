@@ -75,6 +75,9 @@ results/multiqc/broadPeak/multiqc_report.html
 results/bwa/mergedLibrary/*bam
 
 2. From mfed pipeline (in outdir/ directory)
+
+* enriched_fragments.bed - BED file of fragments enriched in fusion versus dam-only
+
 * feature_counts.txt - lists every GATC fragment in the genome, describing the size and number of reads mapping to it in each sample
 
 * filtered_fragments.bed - All the fragments which have passed initial filtering and will go into the DiffBind analysis
@@ -83,15 +86,15 @@ results/bwa/mergedLibrary/*bam
 
 * MA_plot.pdf - plot of average abundance versus fold change for each fragment
 
-* results_annotated.tsv - Details of significant fragments, with fold changes and FDRs, with nearest gene features
+* results_all.tsv - Details of significant fragments, enriched in both fusion and dam-only, with fold changes and FDRs
 
-* results.txt - Details of significant fragments, with fold changes and FDRs
+* results_annotated.tsv - Details of significant fragments, enriched in fusion versus dam-only, with fold changes and FDRs and nearest gene features
+
+* results.tsv - Details of significant fragments, enriched in fusion versus dam-only, with fold changes and FDRs
 
 * sample_heatmap_plot.pdf - heatmap comparing samples
 
 * sample_pca_plot.pdf - PCA plot comparing samples
-
-* significant_fragments.bed - Fragments which pass the thresholds for significant enrichment
 
 * volcano_plot.pdf - volcano plot of fold changes against p values
 
