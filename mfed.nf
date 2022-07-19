@@ -75,11 +75,40 @@ Channel
     .map{row -> file(row.bamReads)}
     .set{ bams_ch2 }
 
+// Another one for the bigwig files
+Channel
+    .fromPath(params.ss, checkIfExists: true)
+    .splitCsv(header:true)
+    .map{row -> file(row.bamReads)}
+    .set{ bams_ch3 }
+
+// BAM indexes for the bigwig files
+Channel
+    .fromPath(params.ss, checkIfExists: true)
+    .splitCsv(header:true)
+    .map{row -> file(row.bamReads + '.bai')}
+    .set{ bam_index_ch }
+
 Channel
     .fromPath(params.ss)
     .first() // Converts to a value channel to avoid consuming the reference
     .set{ss_ch}
 
+// Make a BigWig file for each BAM file
+process bam2bigwig {
+    publishDir params.outdir, mode:'copy'
+
+    input:
+    path bam from bams_ch3
+    path index from bam_index_ch
+
+    output:
+    path "${bam}.bw" into bw_ch
+
+    """
+    bamCoverage --minMappingQuality 1 --bam ${bam} --binSize 1 --skipNonCoveredRegions --outFileName ${bam}.bw
+    """
+}
 
 // use featureCounts to get counts for each GATC fragment
 process featureCounts {
@@ -160,3 +189,4 @@ process fc_bedgraph
     ${baseDir}/bin/results2bedgraph.py ${res} > foldchange.bedgraph 
     """
 }
+
