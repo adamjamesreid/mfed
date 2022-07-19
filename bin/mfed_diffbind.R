@@ -32,8 +32,8 @@ annotation_level
 
 # Comma-separated file listing priority of annotations, default used if not supplied
 #e.g. "Exon,Intron,5UTR,3UTR,Promoter,Downstream,Intergenic"
-#genomicAnnotationPriorityfile <- args[8] # Comma-separated file listing priority of annotations, default used if not supplied
-genomicAnnotationPriorityfile  <- 'mfed/annotation_priority.csv'
+genomicAnnotationPriorityfile <- args[8] # Comma-separated file listing priority of annotations, default used if not supplied
+#genomicAnnotationPriorityfile  <- 'mfed/annotation_priority.csv'
 
 tssRegion = c(-100, 100)
 
@@ -127,7 +127,7 @@ if(file.exists(genomicAnnotationPriorityfile)) {
                                       level=annotation_level)
 } else {
   # Annotate fragments
-  peakAnno.custom.edb <- annotatePeak(db.DB.conf, tssRegion=tssRegion,
+  peakAnno.custom.edb <- annotatePeak(subset(db.DB.conf, db.DB.conf$Fold > 0), tssRegion=tssRegion,
                                       TxDb=Dm_custom_TXDb, #,annoDb="org.Hs.eg.db",
                                       level=annotation_level)
 

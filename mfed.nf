@@ -127,13 +127,13 @@ process diffbind {
     path "filtered_fragments.bed" from filt_frag_ch
 
     output:
-    path "plot.pdf" into results_ch1
-    path "sample_heatmap_post_contrast.pdf" into results_ch5
+    path "sample_pca_plot.pdf" into results_ch1
+    path "sample_heatmap_plot.pdf" into results_ch5
     path "volcano_plot.pdf" into results_ch7
     path "MA_plot.pdf" into results_ch8
-    path "significant_fragments.bed" into results_ch2
-    path "filtered_fragments_diffbind.bed" into results_ch3
-    path "results.txt" into results_ch4
+    path "enriched_fragments.bed" into results_ch3
+    path "results_all.tsv" into results_ch4
+    path "results.tsv" into results_ch2
     path "results_annotated.tsv" into results_ch6
 
     script:
