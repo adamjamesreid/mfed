@@ -36,9 +36,9 @@ n.b. this step helpfully removes duplicates and multimapping reads
 
 ### Run mfed nextflow script 
 
-1. Copy bam files to current directory
+1. Copy bam files and indexes to current directory
 
-`cp results/bwa/mergedLibrary/*bam .`
+`cp results/bwa/mergedLibrary/*bam* .`
 
 2. Set up a samplesheet for mfed describing the data (this is formatted a bit differently to the one for nf-core/chipseq and conforms to the format of DiffBind samplesheets described in the "Reading in the peakset" section [here](https://bioconductor.org/packages/devel/bioc/vignettes/DiffBind/inst/doc/DiffBind.pdf). The test example file is called mfed_samplesheet_test.csv in this repository.)
 
