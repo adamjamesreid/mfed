@@ -76,6 +76,8 @@ results/bwa/mergedLibrary/*bam
 
 2. From mfed pipeline (in outdir/ directory)
 
+* *.bw - BigWig files generated from BAM files
+
 * enriched_fragments.bed - BED file of fragments enriched in fusion versus dam-only
 
 * feature_counts.txt - lists every GATC fragment in the genome, describing the size and number of reads mapping to it in each sample
