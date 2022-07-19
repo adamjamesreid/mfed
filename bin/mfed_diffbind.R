@@ -106,7 +106,7 @@ out_table <- db.DB.conf.enrich.df[, c("seqnames", "start", "end")]
 write.table(out_table, sep='\t', quote=FALSE, row.names=FALSE, col.names=FALSE, file="enriched_fragments.bed")
 
 # Write out results significantly enriched in fusion
-write.table(subset(db.DB.conf, db.DB.conf$Fold > 0), file="results_enirched_in_fusion.tsv", sep="\t", quote=FALSE, row.names=FALSE)
+write.table(subset(db.DB.conf, db.DB.conf$Fold > 0), file="results.tsv", sep="\t", quote=FALSE, row.names=FALSE)
 
 # Testing to add gene annotation for fragments
 #library(TxDb.Dmelanogaster.UCSC.dm6.ensGene) # Which mitochondrial sequence does this annotation use?
