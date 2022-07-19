@@ -14,6 +14,9 @@ wget https://sourceforge.net/projects/subread/files/subread-2.0.3/subread-2.0.3-
 sudo tar -C /usr/local -xzvf subread-2.0.3-Linux-x86_64.tar.gz
 echo 'export PATH=/usr/local/subread-2.0.3-Linux-x86_64/bin:${PATH}' >> $SINGULARITY_ENVIRONMENT
 
+# Required for bamCoverage - used to make bigwig files
+pip install deeptools
+
 # Install required R packages
 R --slave -e 'if (!require("BiocManager", quietly = TRUE)) install.packages("BiocManager")'
 
