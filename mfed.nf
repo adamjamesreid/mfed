@@ -35,8 +35,9 @@ log.info """\
         """
         .stripIndent()
 
-////
-// Set up input channels
+//
+// CHANNELS
+//
 
 // File of GATC fragments which will be the things we are looking for enrichment of
 if (params.frags) { 
@@ -103,6 +104,11 @@ Channel
     .fromPath(params.ss)
     .first() // Converts to a value channel to avoid consuming the reference
     .set{ss_ch}
+
+
+//
+// PROCESSES
+//
 
 // Make a BigWig file for each BAM file
 process bam2bigwig {
