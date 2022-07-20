@@ -1,6 +1,12 @@
 # mfed v0.1
 The mfed pipeline is designed for analysing DamID-seq data. Initially the reads are mapped using the nf-core/chipseq pipeline, then all in silico GATC fragments are filtered based on size and number of mapping reads. The filtered fragments are used as a peakset in DiffBind and DESeq2 is used to look for fragments enriched between Dam-fusion samples and Dam-only samples.
 
+Contents
+
+* [Setup](#Setup)
+
+* [Run the pipeline with test data](#Run-the-pipeline-with-test-data)
+
 ## Setup
 1. Install Miniconda if you have not already (for installing various packages)
 
