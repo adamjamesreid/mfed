@@ -8,7 +8,7 @@ import argparse
 
 pattern = 'GATC'
 
-parser = argparse.ArgumentParser(description='Generate a BED file of in silico GATC fragments for the mfed DAMid analysis pipeline')
+parser = argparse.ArgumentParser(description='Generate a GTF/BED file of in silico GATC fragments for the mfed DAMid analysis pipeline')
 parser.add_argument('-p', '--pattern', help="Patern at which to cut [GATC]")
 parser.add_argument('-O', '--outfmt', help="Output format - bed or gtf [gtf]")
 parser.add_argument('file_path', help="Fasta file of reference genome sequence")
@@ -73,6 +73,3 @@ for (c, p, m) in get_dpnI_fragments(pattern, file_path):
     elif outfmt == 'gtf':
         frag_id = 'frag_id="{}:{}_{}"'.format(c, p, m)
         print ('\t'.join([c, pattern+'_frag', 'region', str(p), str(m), '.', '.', '.', frag_id]))
-        
-
-#cat gatc_frags.bed | perl -ne 'chomp;@a=split/\t/;print "$a[0]\tGATC_frag\tregion\t$a[1]\t$a[2]\t.\t.\t.\tfrag_id=\"$a[0]\:$a[1]\_$a[2]\"\n"' > gatc_frags.gtf
