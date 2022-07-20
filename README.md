@@ -7,8 +7,8 @@ The mfed pipeline is designed for analysing DamID-seq data. Initially the reads 
 
 * [Run the pipeline with test data](#Run-the-pipeline-with-test-data)
 
- * [Map the reads with nf-core/chipseq](#Map-the-reads-with-nf-core/chipseq)
- * [Run mfed nextflow script](#Run-mfed-nextflow-script)
+  * [Map the reads with nf-core/chipseq](#Map-the-reads-with-nf-core/chipseq)
+  * [Run mfed nextflow script](#Run-mfed-nextflow-script)
 
 * [Input files](#Input-files)
 
