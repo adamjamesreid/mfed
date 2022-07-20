@@ -106,7 +106,9 @@ results/bwa/mergedLibrary/*bam
 
 ## More options
 
-You can make your own GATC fragment file using the script mfed/bin/fragment_genome.py
+You can make your own GATC fragment file using the script mfed/bin/fragment_genome.py, e.g.
+
+`mfed/bin/fragment_genome.py results/genome/genome.fa > gatc_frags.gtf`
 
 When running mfed.nf:
 * *--min_reads* sets the minimum number of reads mapping to a fragment across all samples added together for it to pass the inital filtering (default = 10
@@ -148,13 +150,10 @@ It makes use of the DiffBind install in the CRUK DiffBind workshop Singularity i
 Build like this: `sudo singularity build mfed_cruk.sif mfed_cruk.def`
 
 ## To Do
-Genome fragmentation script current outputs BED, when it should do GTF
-
-I have run this to convert bed to GTF:
-
-`cat gatc_frags.bed | perl -ne 'chomp;@a=split/\t/;print "$a[0]\tGATC_frag\tregion\t$a[1]\t$a[2]\t.\t.\t.\tfrag_id=\"$a[0]\:$a[1]\_$a[2]\"\n"' > gatc_frags.gtf`
 
 Generate fragments on the fly in mfed.nf
 
 Try to make it a requirement for only one samplesheet
+
+Generate fragment file with cut sites annotated for viewing in IGV
 
