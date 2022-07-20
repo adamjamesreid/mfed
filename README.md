@@ -12,7 +12,7 @@ The mfed pipeline is designed for analysing DamID-seq data. Initially the reads 
 
 `conda install -c bioconda nextflow`
 
-Add this line to your .bashrc file
+Add this line to your .bashrc file (not essential)
 
 `export NXF_SINGULARITY_CACHEDIR="/mnt/home3/nextflow/"`
 
@@ -37,7 +37,7 @@ N.b. this is designed to work nicely on the Gurdon compute cluster, but will nee
 
 3. Run nf-core/chipseq (--macs_gsize is set to 0 so that it doesn't run MACS2 and fall over because it can't calculate t for single-end damid reads)
 
-`nextflow run nf-core/chipseq -r 1.2.2 -profile singularity -c /mnt/home3/nextflow/gurdon.config --single_end --genome dm6 --input mfed/mapping_design_test.csv --macs_gsize 0`
+`nextflow run nf-core/chipseq -r 1.2.2 -profile singularity -c /mnt/home3/nextflow/gurdon.config --single_end --genome dm6 --input mfed/mapping_design_test.csv --macs_gsize 0 -dsl1`
 
 n.b. this step helpfully removes duplicates and multimapping reads
 
