@@ -90,6 +90,8 @@ results/bwa/mergedLibrary/*bam
 
 * MA_plot.pdf - plot of average abundance versus fold change for each fragment
 
+* mfed_results_for_igv.tar.gz - tarball of files to load an IGV session
+
 * results_all.tsv - Details of significant fragments, enriched in both fusion and dam-only, with fold changes and FDRs
 
 * results_annotated.tsv - Details of significant fragments, enriched in fusion versus dam-only, with fold changes and FDRs and nearest gene features
@@ -118,6 +120,25 @@ When running mfed.nf:
 * *--annlevel* used to determine whether to use gene or transcript features - can be 'gene' or 'transcript' (default = gene)
 * *--annpriority* file used to determine the order of priority of annotations e.g. are you most interested in Promoter or Exon features (default = use the file provided in the repository - annotation_priority.csv
 
+## Load an IGV sesssion
+
+The mfed pipeline produces a tarball of files (mfed_results_for_igv.tar.gz), including a IGV session file to browse the results in the IGV genome browser
+
+Copy the tarball to where you can use IGV - for those at Gurdon, this might be your laptop. On your laptop run:
+
+```
+mkdir igv_files
+
+cd igv_files
+
+scp <user>@cb-milan1.gurdon.private.cam.ac.uk:<path>/mfed_results_for_igv.tar.gz .
+
+tar -xzvf mfed_results_for_igv.tar.gz
+```
+
+Install IGV if you need to from [here](https://software.broadinstitute.org/software/igv/download)
+
+Open IGV, 'File' -> 'Open Session', select *mfed_results_for_igv.tar.gz*
 
 ## Singularity image
 *mfed_cruk.def* is in development as a Singularity definition file capturing the dependencies for mfed.nf
