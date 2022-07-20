@@ -61,6 +61,8 @@ mfed_cruk.sif - Singularity image required for mfed.nf (this is currently availa
 
 mfed_samplesheet_test.csv - Example mfed samplesheet for running mfed.nf
 
+results/genome/genome.fa - This is the genome sequence (as used in the nf-core/chipseq pipeline). This is required for making a working IGV tarball
+
 Test fastq files are currently located on the Gurdon cluster here: /mnt/bioinfo_sharing/sharing/brand/mfed/
 
 ## Output files
