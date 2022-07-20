@@ -1,4 +1,4 @@
-# mfed
+# mfed v0.1
 The mfed pipeline is designed for analysing DamID-seq data. Initially the reads are mapped using the nf-core/chipseq pipeline, then all in silico GATC fragments are filtered based on size and number of mapping reads. The filtered fragments are used as a peakset in DiffBind and DESeq2 is used to look for fragments enriched between Dam-fusion samples and Dam-only samples.
 
 ## Setup
@@ -33,7 +33,7 @@ N.b. this is designed to work nicely on the Gurdon compute cluster, but will nee
 
 `cp /mnt/bioinfo_sharing/sharing/brand/mfed/*gz .`
 
-2. Set up a design file describing the data as described [here](https://nf-co.re/chipseq/1.2.2/usage), for testing use 'mapping_design_test.csv' from this repository. Make sure you use the full paths to the fastq files, or that they are in the current directory.
+2. Set up a design file describing the data as described [here](https://nf-co.re/chipseq/1.2.2/usage). For testing use 'mapping_design_test.csv' from this repository. Make sure you use the full paths to the fastq files, or that they are in the current directory.
 
 3. Run nf-core/chipseq (--macs_gsize is set to 0 so that it doesn't run MACS2 and fall over because it can't calculate t for single-end damid reads)
 
