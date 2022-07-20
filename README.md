@@ -54,21 +54,22 @@ n.b. this step helpfully removes duplicates and multimapping reads
 n.b. here i use the UCSC version of the ensembl gene set - which has 'chr' prepended to the sequence names, consistent with the dm6 genome version used above for nf-core/chipseq
 
 ## Input files
-annotation_priority.csv - example file with priority list for fragment annotations using ChIPseeker
 
-dm6.ensGene.gtf - GFT file of genome annotation which works nicely with the dm6 reference
+**annotation_priority.csv** - example file with priority list for fragment annotations using ChIPseeker
 
-gatc_frags.gtf - GATC fragments file for fly genome
+**dm6.ensGene.gtf** - GFT file of genome annotation which works nicely with the dm6 reference
 
-mapping_design_test.csv - example input file for nf-core/chipseq describing the experiment
+**gatc_frags.gtf** - GATC fragments file for fly genome
 
-mfed_cruk.sif - Singularity image required for mfed.nf (this is currently available here /mnt/home3/nextflow/mfed/mfed_cruk.sif)
+**mapping_design_test.csv** - example input file for nf-core/chipseq describing the experiment
 
-mfed_samplesheet_test.csv - Example mfed samplesheet for running mfed.nf
+**mfed_cruk.sif** - Singularity image required for mfed.nf (this is currently available here /mnt/home3/nextflow/mfed/mfed_cruk.sif)
 
-results/genome/genome.fa - This is the genome sequence (as used in the nf-core/chipseq pipeline). This is required for making a working IGV tarball
+**mfed_samplesheet_test.csv** - Example mfed samplesheet for running mfed.nf
 
-gurdon.config - nextflow config file for running jobs on Slurm at the Gurdon Institute
+**results/genome/genome.fa** - This is the genome sequence (as used in the nf-core/chipseq pipeline). This is required for making a working IGV tarball
+
+**gurdon.config** - nextflow config file for running jobs on Slurm at the Gurdon Institute
 
 Test fastq files are currently located on the Gurdon cluster here: /mnt/bioinfo_sharing/sharing/brand/mfed/
 
@@ -77,39 +78,39 @@ Test fastq files are currently located on the Gurdon cluster here: /mnt/bioinfo_
 1. From nf-core/chipseq 
 * MultiQC results - copy to local machine and view in a web browser
 
-results/multiqc/broadPeak/multiqc_report.html
+**results/multiqc/broadPeak/multiqc_report.html**
 
 * BAM files of mapped reads
 
-results/bwa/mergedLibrary/*bam
+**results/bwa/mergedLibrary/*bam**
 
 2. From mfed pipeline (in outdir/ directory)
 
-* *.bw - BigWig files generated from BAM files
+* ***.bw** - BigWig files generated from BAM files
 
-* enriched_fragments.bed - BED file of fragments enriched in fusion versus dam-only
+* **enriched_fragments.bed** - BED file of fragments enriched in fusion versus dam-only
 
-* feature_counts.txt - lists every GATC fragment in the genome, describing the size and number of reads mapping to it in each sample
+* **feature_counts.txt** - lists every GATC fragment in the genome, describing the size and number of reads mapping to it in each sample
 
-* filtered_fragments.bed - All the fragments which have passed initial filtering and will go into the DiffBind analysis
+* **filtered_fragments.bed** - All the fragments which have passed initial filtering and will go into the DiffBind analysis
  
-* foldchange.bedgraph - fold changes for significant fragments across the genome (view in IGV)
+* **foldchange.bedgraph**  - fold changes for significant fragments across the genome (view in IGV)
 
-* MA_plot.pdf - plot of average abundance versus fold change for each fragment
+* **MA_plot.pdf** - plot of average abundance versus fold change for each fragment
 
-* mfed_results_for_igv.tar.gz - tarball of files to load an IGV session
+* **mfed_results_for_igv.tar.gz** - tarball of files to load an IGV session
 
-* results_all.tsv - Details of significant fragments, enriched in both fusion and dam-only, with fold changes and FDRs
+* **results_all.tsv** - Details of significant fragments, enriched in both fusion and dam-only, with fold changes and FDRs
 
-* results_annotated.tsv - Details of significant fragments, enriched in fusion versus dam-only, with fold changes and FDRs and nearest gene features
+* **results_annotated.tsv** - Details of significant fragments, enriched in fusion versus dam-only, with fold changes and FDRs and nearest gene features
 
-* results.tsv - Details of significant fragments, enriched in fusion versus dam-only, with fold changes and FDRs
+* **results.tsv** - Details of significant fragments, enriched in fusion versus dam-only, with fold changes and FDRs
 
-* sample_heatmap_plot.pdf - heatmap comparing samples
+* **sample_heatmap_plot.pdf** - heatmap comparing samples
 
-* sample_pca_plot.pdf - PCA plot comparing samples
+* **sample_pca_plot.pdf** - PCA plot comparing samples
 
-* volcano_plot.pdf - volcano plot of fold changes against p values
+* **volcano_plot.pdf** - volcano plot of fold changes against p values
 
 ## More options
 
@@ -118,16 +119,16 @@ You can make your own GATC fragment file using the script mfed/bin/fragment_geno
 `mfed/bin/fragment_genome.py results/genome/genome.fa > gatc_frags.gtf`
 
 When running mfed.nf:
-* *--min_reads* sets the minimum number of reads mapping to a fragment across all samples added together for it to pass the inital filtering (default = 10
-* *--min_length* sets the minimum length in of a fragment for it to pass initial filtering (default = 300)
-* *--control* is the name of the control condition as specified in the samplesheet e.g. damonly
-* *--treatment* is the name of the treatment/fusion condition specified in the samplesheet e.g. hp1fusion
-* *--fc_cut* is the fold change cutoff to consider a fragment as significant (default = 2)
-* *--fdr_cut* is the False Discovery Rate (FDR) cutoff to consider a fragment as significant (default = 0.01)
-* *--outdir* is the directory for the output files (default = outdir)
-* *--anngtf* is a GTF format file of genome annotation for determining the nearest gene
-* *--annlevel* used to determine whether to use gene or transcript features - can be 'gene' or 'transcript' (default = gene)
-* *--annpriority* file used to determine the order of priority of annotations e.g. are you most interested in Promoter or Exon features (default = use the file provided in the repository - annotation_priority.csv
+* **--min_reads** sets the minimum number of reads mapping to a fragment across all samples added together for it to pass the inital filtering (default = 10
+* **--min_length** sets the minimum length in of a fragment for it to pass initial filtering (default = 300)
+* **--control** is the name of the control condition as specified in the samplesheet e.g. damonly
+* **--treatment** is the name of the treatment/fusion condition specified in the samplesheet e.g. hp1fusion
+* **--fc_cut** is the fold change cutoff to consider a fragment as significant (default = 2)
+* **--fdr_cut** is the False Discovery Rate (FDR) cutoff to consider a fragment as significant (default = 0.01)
+* **--outdir** is the directory for the output files (default = outdir)
+* **--anngtf** is a GTF format file of genome annotation for determining the nearest gene
+* **--annlevel** used to determine whether to use gene or transcript features - can be 'gene' or 'transcript' (default = gene)
+* **--annpriority** file used to determine the order of priority of annotations e.g. are you most interested in Promoter or Exon features (default = use the file provided in the repository - annotation_priority.csv
 
 ## Load an IGV sesssion
 
