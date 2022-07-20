@@ -196,7 +196,7 @@ process fc_bedgraph
     publishDir params.outdir, mode:'copy'
 
     input:
-    path res from results_ch6
+    path res from results_ch4
 
     output:
     path "foldchange.bedgraph" into bedgraph_ch
