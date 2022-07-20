@@ -141,7 +141,7 @@ Install IGV if you need to from [here](https://software.broadinstitute.org/softw
 Open IGV, 'File' -> 'Open Session', select *mfed_results_for_igv.tar.gz*
 
 ## Singularity image
-*mfed_cruk.def* is in development as a Singularity definition file capturing the dependencies for mfed.nf
+The software dependencies for mfed.nf are captured in a Singularity image. This can be generated using this Singularity definition file: *mfed_cruk.def*.
 
 It makes use of the DiffBind install in the CRUK DiffBind workshop Singularity image described [here](https://www.cruk.cam.ac.uk/core-facilities/bioinformatics-core/software/diffbind-tool-for-chip-seq-and-atac-seq-analysis)
 
