@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 # Generate an IGV session file for viewing data from the mfed pipeline
 

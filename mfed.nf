@@ -11,6 +11,7 @@ params.fc_cut = 2
 params.fdr_cut = 0.01
 params.outdir = "$baseDir/outdir"
 params.anngtf = ""
+params.genome = ""
 params.annlevel = 'gene' // gene or transcript
 params.annpriority = ''// File of element priority for fragment annotation
 
@@ -20,6 +21,7 @@ log.info """\
    
         Samplesheet: 		${params.ss}
         Genome annotations GTF: ${params.anngtf}
+        Genome sequence:	${params.genome}
         Annotation level:	${params.annlevel}
         Annotation priority file:	${params.annpriority}
         GATC fragment GTF:	${params.frags}
@@ -51,6 +53,14 @@ if (params.anngtf) {
     .first() // Converts to a value channel to avoid consuming the reference
     .set{anngtf_ch}
 } else { exit 1, 'Genome annotation GTF file not specified!' }
+
+// Set up Genome sequence channel (used to create IGV session file and tarball)
+if (params.genome) {
+  Channel
+    .fromPath(params.genome, checkIfExists: true)
+    .first() // Converts to a value channel to avoid consuming the reference
+    .set{genome_ch}
+} else { exit 1, 'Genome sequence file not specified! - can you use results/genome/genome.fa?' }
 
 // set up optional annotation priority file channel (used by ChIPseeker in the mfed_diffbind.R script)
 if (params.annpriority) {
@@ -190,3 +200,28 @@ process fc_bedgraph
     """
 }
 
+//Write IGV session file
+process write_session_file
+{
+    publishDir params.outdir, mode:'copy'
+
+    input:
+    path anngtf from anngtf_ch
+    path genome from genome_ch
+    path foldchange from bedgraph_ch
+    path enriched from results_ch3
+    path bws from bw_ch.collect()
+
+    output:
+    path "igv_session_file.xml"
+    path "mfed_results_for_igv.tar.gz"
+
+    """
+    ${baseDir}/bin/write_igv_session_file.py -f ${genome} -g genome.gtf -fc ${foldchange} -ef ${enriched} ${bws.join(' ')} > igv_session_file.xml
+
+    # IGV doesn't like annotation files with e.g. 'ensGene' in the name so I change the name here to something innocuous
+    ln -s ${anngtf} genome.gtf
+
+    tar -chvzf mfed_results_for_igv.tar.gz ${genome} genome.gtf ${foldchange} ${enriched} ${bws.join(' ')} igv_session_file.xml
+    """    
+}
