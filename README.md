@@ -61,6 +61,8 @@ mfed_samplesheet_test.csv - Example mfed samplesheet for running mfed.nf
 
 results/genome/genome.fa - This is the genome sequence (as used in the nf-core/chipseq pipeline). This is required for making a working IGV tarball
 
+gurdon.config - nextflow config file for running jobs on Slurm at the Gurdon Institute
+
 Test fastq files are currently located on the Gurdon cluster here: /mnt/bioinfo_sharing/sharing/brand/mfed/
 
 ## Output files
