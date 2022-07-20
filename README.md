@@ -44,7 +44,7 @@ n.b. this step helpfully removes duplicates and multimapping reads
 
 3. Run mfed Nextflow pipeline
 
-`nextflow run mfed/mfed.nf --ss mfed/mfed_samplesheet_test.csv --treatment hp1fusion --control damonly --frags mfed/gatc_frags.gtf --outdir outdir --anngtf mfed/dm6.ensGene.gtf --annpriority mfed/annotation_priority.csv -c /mnt/home3/nextflow/gurdon.config -with-singularity /mnt/home3/nextflow/mfed/mfed_cruk.sif`
+`nextflow run mfed/mfed.nf --ss mfed/mfed_samplesheet_test.csv --treatment hp1fusion --control damonly --frags mfed/gatc_frags.gtf --outdir outdir --anngtf mfed/dm6.ensGene.gtf --annpriority mfed/annotation_priority.csv --genome results/genome/genome.fa -c /mnt/home3/nextflow/gurdon.config -with-singularity /mnt/home3/nextflow/mfed/mfed_cruk.sif`
 
 n.b. here i use the UCSC version of the ensembl gene set - which has 'chr' prepended to the sequence names, consistent with the dm6 genome version used above for nf-core/chipseq
 
