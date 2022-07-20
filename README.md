@@ -25,6 +25,9 @@ Add this line to your .bashrc file
 `git clone https://github.com/adamjamesreid/mfed.git`
 
 ## Run the pipeline with test data
+
+N.b. this is designed to work nicely on the Gurdon compute cluster, but will need adapting elsewhere
+
 ### Map the reads with nf-core/chipseq 
 1. Copy test data to the current directory:
 
