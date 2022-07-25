@@ -1,4 +1,6 @@
-# mfed
+# mfed v0.1
+# This version is deprecated as of 25th July 2022 in favour of version 1.0
+
 The mfed pipeline is designed for analysing DamID-seq data. Initially the reads are mapped using the nf-core/chipseq pipeline, then all in silico GATC fragments are filtered based on size and number of mapping reads. The filtered fragments are used as a peakset in DiffBind and DESeq2 is used to look for fragments enriched between DAM-fusion samples and DAM-only samples.
 
 ## Setup
