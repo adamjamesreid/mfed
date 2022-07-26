@@ -3,6 +3,8 @@
 
 library(DiffBind)
 library(parallel)
+library(ChIPseeker)
+library(GenomicFeatures)
 
 ## ARGS
 # 1. samplesheet
@@ -21,6 +23,12 @@ fc_cut <- args[4]
 fdr_cut <- args[5]
 gtf_file <- args[6]
 annotation_level <- args[7]
+tss_region_start <- args[8]
+tss_region_end <- args[9]
+
+# Comma-separated file listing priority of annotations, default used if not supplied
+#e.g. "Exon,Intron,5UTR,3UTR,Promoter,Downstream,Intergenic"
+genomicAnnotationPriorityfile <- args[10] # Comma-separated file listing priority of annotations, default used if not supplied
 
 ss
 control
@@ -29,14 +37,11 @@ fc_cut
 fdr_cut
 gtf_file
 annotation_level
+tss_region_start
+tss_region_end
 
-# Comma-separated file listing priority of annotations, default used if not supplied
-#e.g. "Exon,Intron,5UTR,3UTR,Promoter,Downstream,Intergenic"
-genomicAnnotationPriorityfile <- args[8] # Comma-separated file listing priority of annotations, default used if not supplied
-#genomicAnnotationPriorityfile  <- 'mfed/annotation_priority.csv'
 
-tssRegion = c(-100, 100)
-
+# Read in samplesheet
 db <- dba(sampleSheet=ss)
 
 # minOverlap is the proportion of samples in which the peak must be found to be included (if 1 or more confusingly it becomes the number of samples)
@@ -48,14 +53,17 @@ info <- dba.show(db)
 libsizes <- cbind(LibReads=info$Reads, FRiP=info$FRiP,PeakReads=round(info$Reads * info$FRiP))
 rownames(libsizes) <- info$ID
 
+# Plot a heatmap of samples
 pdf("sample_heatmap_plot.pdf")
 dba.plotHeatmap(db)
 dev.off()
 
+# Plot a PCA plot of samples
 pdf("sample_pca_plot.pdf")
 dba.plotPCA(db)
 dev.off()
 
+# Normalise data
 db <- dba.normalize(db)
 
 norm <- dba.normalize(db, bRetrieve=TRUE)
@@ -65,6 +73,7 @@ normlibs <- cbind(FullLibSize=norm$lib.sizes, NormFacs=norm$norm.factors, NormLi
 rownames(normlibs) <- info$ID
 normlibs
 
+# Compare fusion and dam-only
 db <- dba.contrast(db, contrast=c("Treatment", treatment, control))
 db
 
@@ -99,12 +108,8 @@ write.table(out_table, sep='\t', quote=FALSE, row.names=FALSE, col.names=FALSE, 
 # Write out results significantly enriched in fusion
 write.table(subset(db.DB.conf, db.DB.conf$Fold > 0), file="results.tsv", sep="\t", quote=FALSE, row.names=FALSE)
 
-# Testing to add gene annotation for fragments
-#library(TxDb.Dmelanogaster.UCSC.dm6.ensGene) # Which mitochondrial sequence does this annotation use?
-library(ChIPseeker)
-
-# Try making a custom TxDB object
-library(GenomicFeatures)
+# Add gene annotation for fragments
+# Make a custom TxDB object
 Dm_custom_TXDb <- makeTxDbFromGFF(gtf_file, format="gtf")
 
 #Read in annotation priorities
@@ -112,14 +117,14 @@ if(file.exists(genomicAnnotationPriorityfile)) {
   apf_df = read.csv(genomicAnnotationPriorityfile, header=FALSE)
 
   # Annotate fragments
-  peakAnno.custom.edb <- annotatePeak(subset(db.DB.conf, db.DB.conf$Fold > 0), tssRegion=tssRegion,
-                                      TxDb=Dm_custom_TXDb, #,annoDb="org.Hs.eg.db",
+  peakAnno.custom.edb <- annotatePeak(subset(db.DB.conf, db.DB.conf$Fold > 0), tssRegion=c(as.numeric(tss_region_start), as.numeric(tss_region_end)),
+                                      TxDb=Dm_custom_TXDb,
                                       genomicAnnotationPriority = as.character(apf_df[1,]),
                                       level=annotation_level)
 } else {
   # Annotate fragments
-  peakAnno.custom.edb <- annotatePeak(subset(db.DB.conf, db.DB.conf$Fold > 0), tssRegion=tssRegion,
-                                      TxDb=Dm_custom_TXDb, #,annoDb="org.Hs.eg.db",
+  peakAnno.custom.edb <- annotatePeak(subset(db.DB.conf, db.DB.conf$Fold > 0), tssRegion=c(as.numeric(tss_region_start), as.numeric(tss_region_end)),
+                                      TxDb=Dm_custom_TXDb,
                                       level=annotation_level)
 
 }

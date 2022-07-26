@@ -14,6 +14,8 @@ params.anngtf = ""
 params.genome = ""
 params.annlevel = 'gene' // gene or transcript
 params.annpriority = ''// File of element priority for fragment annotation
+params.tss_region_start = -1000 // TSS region start for ChIPSeeker analysis
+params.tss_region_end = 1000 // TSS region end for ChIPSeeker analysis 
 
 log.info """\
         METHYLATION FRAGMENT ENRICHMENT FOR DAMID (mfed)
@@ -24,6 +26,8 @@ log.info """\
         Genome sequence:	${params.genome}
         Annotation level:	${params.annlevel}
         Annotation priority file:	${params.annpriority}
+        ChIPSeeker TSS region start:	${params.tss_region_start}
+        ChIPSeeker TSS region end:	${params.tss_region_end}
         GATC fragment GTF:	${params.frags}
         Minimum frag length:	${params.min_length}
         Minimum reads (in biggest samples):	${params.min_reads}
@@ -187,7 +191,7 @@ process diffbind {
     # Set environment variables to avoid using local R (or python) libraries
     export R_LIBS_USER=""
     
-    R CMD BATCH --no-save --no-restore \"--args ${ss} ${params.control} ${params.treatment} ${params.fc_cut} ${params.fdr_cut} ${anngtf} ${params.annlevel} ${annpriority}\" ${baseDir}/bin/mfed_diffbind.R .mfed_diffbind.Rout
+    R CMD BATCH --no-save --no-restore \"--args ${ss} ${params.control} ${params.treatment} ${params.fc_cut} ${params.fdr_cut} ${anngtf} ${params.annlevel} ${params.tss_region_start} ${params.tss_region_end} ${annpriority}\" ${baseDir}/bin/mfed_diffbind.R .mfed_diffbind.Rout
     """
 }
 
