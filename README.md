@@ -20,6 +20,9 @@ The mfed pipeline is designed for analysing DamID-seq data. Initially the reads 
 
 * [Singularity image](#Singularity-image)
 
+* [FAQ](#FAQ)
+
+
 ## Setup
 1. Install Miniconda if you have not already (for installing various packages)
 
@@ -119,6 +122,8 @@ Test fastq files are currently located on the Gurdon cluster here: /mnt/bioinfo_
 
 * **MA_plot.pdf** - plot of average abundance versus fold change for each fragment
 
+* **mfed.RData** - R data object, allowing reanalysis/redrawing of figures etc. (see FAQ for details)
+
 * **mfed_results_for_igv.tar.gz** - tarball of files to load an IGV session
 
 * **results_all.tsv** - Details of significant fragments, enriched in both fusion and dam-only, with fold changes and FDRs
@@ -177,6 +182,8 @@ The software dependencies for mfed.nf are captured in a Singularity image. This 
 It makes use of the DiffBind install in the CRUK DiffBind workshop Singularity image described [here](https://www.cruk.cam.ac.uk/core-facilities/bioinformatics-core/software/diffbind-tool-for-chip-seq-and-atac-seq-analysis)
 
 Build like this: `sudo singularity build mfed_cruk.sif mfed_cruk.def`
+
+## FAQ
 
 ## To Do
 
