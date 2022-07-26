@@ -185,13 +185,14 @@ process diffbind {
     path "results.tsv" into results_ch2
     path "results_annotated.tsv" into results_ch6
     path "mfed.RData" into results_ch9
+    path "mfed_diffbind.Rout" into results_ch10
 
     script:
     """
     # Set environment variables to avoid using local R (or python) libraries
     export R_LIBS_USER=""
     
-    R CMD BATCH --no-save --no-restore \"--args ${ss} ${params.control} ${params.treatment} ${params.fc_cut} ${params.fdr_cut} ${anngtf} ${params.annlevel} ${params.tss_region_start} ${params.tss_region_end} ${annpriority}\" ${baseDir}/bin/mfed_diffbind.R .mfed_diffbind.Rout
+    R CMD BATCH --no-save --no-restore \"--args ${ss} ${params.control} ${params.treatment} ${params.fc_cut} ${params.fdr_cut} ${anngtf} ${params.annlevel} ${params.tss_region_start} ${params.tss_region_end} ${annpriority}\" ${baseDir}/bin/mfed_diffbind.R mfed_diffbind.Rout
     """
 }
 
