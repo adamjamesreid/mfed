@@ -218,7 +218,7 @@ You can! Recently arguments were added to mfed.nf - `--tss_region_start` and `--
 
 * *The pipeline fails at the DiffBind stage. How can I tell what is wrong?*
 
-The nextflow output should tell you which folder the DiffBind analysis was run in. Something like ‘work/0b/71e25020b58f2b7192dabce04f4931/’. The error message ought to tell you which directory, or you could looking the output for a link like this:
+The nextflow output should tell you which folder the DiffBind analysis was run in. Something like ‘work/0b/71e25020b58f2b7192dabce04f4931/’. The error message ought to tell you which directory, or you could look in the output for a line like this:
 
 `[13/b2f5aa] process > diffbind           [100%] 1 of 1 ✔`
 
