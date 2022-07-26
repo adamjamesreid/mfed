@@ -155,6 +155,8 @@ When running mfed.nf:
 * **--anngtf** is a GTF format file of genome annotation for determining the nearest gene
 * **--annlevel** used to determine whether to use gene or transcript features - can be 'gene' or 'transcript' (default = gene)
 * **--annpriority** file used to determine the order of priority of annotations e.g. are you most interested in Promoter or Exon features (default = use the file provided in the repository - annotation_priority.csv
+* **--tss_region_start** TSS region start used in ChIPSeeker analysis to determine location of significant peaks with respect to genes (default = -1000)
+* **--tss_region_end** TSS region end (default = 1000)
 
 ## Load an IGV sesssion
 
