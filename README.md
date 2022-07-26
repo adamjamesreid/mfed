@@ -232,7 +232,7 @@ The output (STDOUT) from the R session is saved in the file ‘mfed_dffbind.R’
 
 * *Why does Nextflow use so much disk space?*
 
-Nextflow saves all the intermediate files it uses so that failed runs can be troubleshooted and then resumed. If you are happy that all your so far don’t need to be troubleshooted or resumed, you can remove the ‘work/’ directory and make your sys admin happy again.
+Nextflow saves all the intermediate files it uses so that failed runs can be troubleshooted and then resumed. If you are happy that none of your runs need to be troubleshooted or resumed, you can remove the ‘work/’ directory and make your sys admin happy again.
 
 
 ## To Do
