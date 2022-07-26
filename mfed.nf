@@ -4,7 +4,7 @@
 params.ss = 'samplesheet.csv'
 params.frags = 'gatc_frags.gtf'
 params.min_reads = 10
-params.min_length = 300
+params.min_length = 150
 params.control = 'DAM'
 params.treatment = ''
 params.fc_cut = 2
