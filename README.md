@@ -199,8 +199,10 @@ It may not be in your path. Try specifying the full path e.g. `~/miniconda3/bin/
 
 Mfed now saves an R image so that you can revisit the analysis. The file is called ‘mfed.RData’. In R, do:
 
+```
 library(DiffBind)
 load(‘mfed.RData’)
+```
 
 * *Can I get the R object from DiffBind?*
 
