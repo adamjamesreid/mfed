@@ -77,6 +77,8 @@ n.b. If you have a Nexflow version <=21, leave out '-dsl1'
 
 n.b. here i use the UCSC version of the ensembl gene set - which has 'chr' prepended to the sequence names, consistent with the dm6 genome version used above for nf-core/chipseq
 
+n.b. When you run the pipeline with your own data, make sure to change '--treatment' and '--control' to match entries in the 'group' column of the samplesheet
+
 ## Input files
 
 **annotation_priority.csv** - example file with priority list for fragment annotations using ChIPseeker
@@ -121,6 +123,8 @@ Test fastq files are currently located on the Gurdon cluster here: /mnt/bioinfo_
 * **foldchange.bedgraph**  - fold changes for significant fragments across the genome (view in IGV)
 
 * **MA_plot.pdf** - plot of average abundance versus fold change for each fragment
+
+* **mfed_diffbind.Rout** - STDOUT from R session. Has some useful results from ChIPSeeker not available elsewhere
 
 * **mfed.RData** - R data object, allowing reanalysis/redrawing of figures etc. (see FAQ for details)
 
