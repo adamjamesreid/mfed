@@ -146,7 +146,7 @@ You can make your own GATC fragment file using the script mfed/bin/fragment_geno
 
 When running mfed.nf:
 * **--min_reads** sets the minimum number of reads mapping to a fragment across all samples added together for it to pass the inital filtering (default = 10
-* **--min_length** sets the minimum length in of a fragment for it to pass initial filtering (default = 300)
+* **--min_length** sets the minimum length in of a fragment for it to pass initial filtering (default = 150)
 * **--control** is the name of the control condition as specified in the samplesheet e.g. damonly
 * **--treatment** is the name of the treatment/fusion condition specified in the samplesheet e.g. hp1fusion
 * **--fc_cut** is the fold change cutoff to consider a fragment as significant (default = 2)
