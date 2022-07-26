@@ -31,10 +31,6 @@ The mfed pipeline is designed for analysing DamID-seq data. Initially the reads 
 
 `conda install -c bioconda nextflow`
 
-Add this line to your .bashrc file (not essential)
-
-`export NXF_SINGULARITY_CACHEDIR="/mnt/home3/nextflow/"`
-
 3. Install Git if you do not have it already (For downloading code repository)
 
 `conda install -c anaconda git`
