@@ -180,6 +180,7 @@ process diffbind {
     path "results_all.tsv" into results_ch4
     path "results.tsv" into results_ch2
     path "results_annotated.tsv" into results_ch6
+    path "mfed.RData" into results_ch9
 
     script:
     """

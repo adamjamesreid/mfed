@@ -81,18 +81,9 @@ pdf("volcano_plot.pdf")
 dba.plotVolcano(db, th=as.double(fdr_cut))
 dev.off()
 
-#dev.off()
-#pdf("sample_heatmap_post_contrast.pdf")
-#plot(db, contrast=1)
-#dev.off()
-
+# Generate report
 db.DB <- dba.report(db)
 db.DB
-
-hist(db.DB$Fold, breaks=50)
-
-# Write out all results
-# write.table(db.DB, file="results_all.txt", sep="\t", quote=FALSE, row.names=FALSE)
 
 # Filter for significance (fold change and FDR)
 db.DB.conf <- subset(db.DB, ((db.DB$Fold >= as.double(fc_cut) | db.DB$Fold <= as.double(fc_cut)) & db.DB$FDR <= as.double(fdr_cut)))
@@ -139,5 +130,5 @@ peakAnno.custom.edb
 peakAnno.custom.df <- as.data.frame(peakAnno.custom.edb)
 write.table(peakAnno.custom.edb, file="results_annotated.tsv", sep="\t", quote=FALSE, row.names=FALSE)
 
-
-
+# Save an image so e.g. figures can be reproduced as needed
+save.image(file = "mfed.RData")
