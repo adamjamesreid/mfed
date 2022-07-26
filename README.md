@@ -195,7 +195,7 @@ Build like this: `sudo singularity build mfed_cruk.sif mfed_cruk.def`
 
 It may not be in your path. Try specifying the full path e.g. `~/miniconda3/bin/conda`. Ideally add `~/miniconda3/bin/` in your $PATH environment variable. See this [tutorial:]( https://riptutorial.com/bash/example/19613/add-a-path-to-the-path-environment-variable).
 
-* *Can I have underlying data files for PCA volcano plot and heatmap, MA plot*
+* *Can I have underlying data files for PCA, volcano plot, heatmap, MA plot etc.?*
 
 Mfed now saves an R image so that you can revisit the analysis. The file is called ‘mfed.RData’. In R, do:
 
