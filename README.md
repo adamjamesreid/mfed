@@ -191,6 +191,48 @@ Build like this: `sudo singularity build mfed_cruk.sif mfed_cruk.def`
 
 ## FAQ
 
+* *Why does conda not run?*
+
+It may not be in your path. Try specifying the full path e.g. `~/miniconda3/bin/conda`. Ideally add `~/miniconda3/bin/` in your $PATH environment variable. See this [tutorial:]( https://riptutorial.com/bash/example/19613/add-a-path-to-the-path-environment-variable).
+
+* *Can I have underlying data files for PCA volcano plot and heatmap, MA plot*
+
+Mfed now saves an R image so that you can revisit the analysis. The file is called ‘mfed.RData’. In R, do:
+
+library(DiffBind)
+load(‘mfed.RData’)
+
+* *Can I get the R object from DiffBind?*
+
+See above
+
+* *Can I process lots of different fusion and dam-only samples together?*
+
+You can process any number of different fusion and dam-only conditions together in the mapping step. However you have to run the mfed analysis step once for each fusion versus dam-only comparison. You can do this in two ways. Firstly, if you use the whole samplesheet, with all the samples in it, they will get normalised together. If some conditions have lots of variation between replicates this will increase the estimate of variance across all conditions and will affect all comparisons. Alternatively you can generate the mfed samplesheet with `design_to_samplesheet.py` and then split out the samples you need for each fusion into separate samplesheets, running each one completely separately.
+
+* *Can I change the TSS size for ChipSeeker?*
+
+You can! Recently arguments were added to mfed.nf - `--tss_region_start` and `--tss_region_end`.
+
+* *The pipeline fails at the DiffBind stage. How can I tell what is wrong?*
+
+The nextflow output should tell you which folder the DiffBind analysis was run in. Something like ‘work/0b/71e25020b58f2b7192dabce04f4931/’. The error message ought to tell you which directory, or you could looking the output for a link like this:
+
+`[13/b2f5aa] process > diffbind           [100%] 1 of 1 ✔`
+
+In square brackets is the start of the name of the folder where diffbind was run. In that folder will be a file called `mfed_diffbind.Rout`. Towards the bottom of that file will be some error messages from R about what went wrong. This file is now also saved to the mfed output directory.
+
+One thing that sometimes causes an error is not having ‘treatment’ and ‘control’ arguments which match the names in the ‘group’ column of the mfed samplesheet. Worth checking!
+
+* *How can I see the output of DiffBind and ChIPSeeker?*
+
+The output (STDOUT) from the R session is saved in the file ‘mfed_dffbind.R’ in the mfed output directory
+
+* *Why does Nextflow use so much disk space?*
+
+Nextflow saves all the intermediate files it uses so that failed runs can be troubleshooted and then resumed. If you are happy that all your so far don’t need to be troubleshooted or resumed, you can remove the ‘work/’ directory and make your sys admin happy again.
+
+
 ## To Do
 
 Generate fragments on the fly in mfed.nf
