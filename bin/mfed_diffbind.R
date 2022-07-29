@@ -60,7 +60,7 @@ dev.off()
 
 # Plot a PCA plot of samples
 pdf("sample_pca_plot.pdf")
-dba.plotPCA(db)
+dba.plotPCA(db, label=DBA_ID)
 dev.off()
 
 # Normalise data
