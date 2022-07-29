@@ -153,7 +153,7 @@ When running mfed.nf:
 * **--min_length** sets the minimum length in of a fragment for it to pass initial filtering (default = 150)
 * **--control** is the name of the control condition as specified in the samplesheet e.g. damonly
 * **--treatment** is the name of the treatment/fusion condition specified in the samplesheet e.g. hp1fusion
-* **--fc_cut** is the fold change cutoff to consider a fragment as significant (default = 2)
+* **--fc_cut** is the log2 fold change cutoff to consider a fragment as significant (default = 2)
 * **--fdr_cut** is the False Discovery Rate (FDR) cutoff to consider a fragment as significant (default = 0.01)
 * **--outdir** is the directory for the output files (default = outdir)
 * **--anngtf** is a GTF format file of genome annotation for determining the nearest gene
