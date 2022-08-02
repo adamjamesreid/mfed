@@ -95,7 +95,7 @@ db.DB <- dba.report(db)
 db.DB
 
 # Filter for significance (fold change and FDR)
-db.DB.conf <- subset(db.DB, ((db.DB$Fold >= as.double(fc_cut) | db.DB$Fold <= as.double(-fc_cut)) & db.DB$FDR <= as.double(fdr_cut)))
+db.DB.conf <- subset(db.DB, ((db.DB$Fold >= as.double(fc_cut) | db.DB$Fold <= -as.double(fc_cut)) & db.DB$FDR <= as.double(fdr_cut)))
 
 # Write out all significant results - enriched in fusion or control
 write.table(db.DB.conf, file="results_all.tsv", sep="\t", quote=FALSE, row.names=FALSE)
